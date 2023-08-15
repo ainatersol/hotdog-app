@@ -1,0 +1,6 @@
+hotdog.pkl filter=lfs diff=lfs merge=lfs -text
+sandwich.jpg filter=lfs diff=lfs merge=lfs -text
+hotdog.jpg filter=lfs diff=lfs merge=lfs -text
+pasta.jpg filter=lfs diff=lfs merge=lfs -text
+pizza.jpg filter=lfs diff=lfs merge=lfs -text
+salad.jpg filter=lfs diff=lfs merge=lfs -text

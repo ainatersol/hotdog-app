@@ -1,34 +1,13 @@
 ---
-title: Hotdog or Not Hotdog - How hotdoggie are you?
-layout: page
+title: "Is it a Hotdog?"
 ---
 
-<input id="photo" type="file"> 
-<div id="results"></div>
-<script>
-  async function predictImage(dataUrl) {
-    const response = await fetch(dataUrl);
-    const blobImage = await response.blob();
+<div id="image-container">
+  <input type="file" id="image-upload" accept="image/*" />
+  <img id="uploaded-image" style="display:none; width: 192px; height: 192px;" />
+  <button id="predict-button">Predict</button>
+</div>
 
-    const app = await client("https://ainatersol-isithotdog.hf.space/");
-    const result = await app.predict("/predict", [blobImage]);
-
-    return result.data;
-  }
-
-  async function loaded(reader) {
-    const result = await predictImage(reader.result);
-    
-    // Assuming result.data looks like { label: "hotdog", confidence: 0.9 } - adjust as per actual response format
-    const label = result.label;
-    results.innerHTML = `<br/><img src="${reader.result}" width="300"> <p>${label}</p>`
-  }
-
-  function read() {
-    const reader = new FileReader();
-    reader.addEventListener('load', () => loaded(reader));
-    reader.readAsDataURL(photo.files[0]);
-  }
-
-  photo.addEventListener('input', read);
-</script>
+<div id="result">
+  <!-- Prediction result will be displayed here -->
+</div>

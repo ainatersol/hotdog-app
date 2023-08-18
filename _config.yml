@@ -1,9 +1,3 @@
-remote_theme: daviddarnes/alembic@main
-plugins:
-- jekyll-remote-theme
-
-title: Aina Tersol
-description: Hotdogs
-
-author:
-  name: Aina Tersol
+project:
+  type: website
+  output-dir: docs

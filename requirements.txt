@@ -1,5 +1,5 @@
 #gradio
-
+fastai
 streamlit
 st-clickable-images
 altair<5

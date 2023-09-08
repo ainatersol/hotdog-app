@@ -4,14 +4,12 @@ from st_clickable_images import clickable_images
 import pandas as pd
 import numpy as np
 from PIL import Image
-from fastai.vision.all import *
+from fastai.vision.all import load_learner
 
 def get_image_base64(image_path):
     with open(image_path, "rb") as img_file:
         return base64.b64encode(img_file.read()).decode()
 
-
-learn = load_learner('hotdog.pkl')
 categories = ('hotdog', 'pasta', 'pizza', 'salad', 'sandwich')
 
 st.write(""" 
@@ -22,6 +20,7 @@ st.write(f'Categories: {categories}')
 st.sidebar.header('User image upload')
 
 def classify_images(img):
+    learn = load_learner('hotdog.pkl')
     pred, idx, probs = learn.predict(img)
     # st.write( dict(zip(categories, map(float, probs)))))
     return categories[np.argmax(probs)]

@@ -18,8 +18,13 @@ st.write("""
          # Simple streamlit app for hotdog classification
 
           """)
-
+st.write(f'Categories: {categories}')
 st.sidebar.header('User image upload')
+
+def classify_images(img):
+    pred, idx, probs = learn.predict(img)
+    # st.write( dict(zip(categories, map(float, probs)))))
+    return categories[np.argmax(probs)]
 
 def user_input(): 
     images = st.sidebar.file_uploader('load images to classify', 
@@ -30,32 +35,30 @@ def user_input():
 
 uploaded_files = user_input()
 
-
 st.sidebar.header('Example images')
 
 # Create a clickable list in the sidebar
 clicked_ex = st.sidebar.selectbox(
     "Click to select an example",
-    [c for c in categories],
+     [None]+[c for c in categories],
 
 )
 
 # Display clicked example image
-if clicked_ex is not None:
+if clicked_ex is not None :
     st.sidebar.markdown(f"### Selected Example")
-    st.sidebar.image(np.array(Image.open(f'JH/{clicked_ex}.jpg')), caption=f"Image #{clicked_ex}")
+    img_ex = np.array(Image.open(f'JH/{clicked_ex}.jpg'))
+    st.sidebar.image(img_ex, caption=f"Image #{clicked_ex}")
 
-st.write(f'Categories: {categories}')
+    prediction = classify_images(img_ex)
+    print(prediction)
 
-def classify_images(img):
-    pred, idx, probs = learn.predict(img)
-    return dict(zip(categories, map(float, probs)))
+    st.write(f"prediction {prediction}")
 
 for uploaded_img in uploaded_files:
-    bytes_data = uploaded_img.read()
     st.sidebar.write(f"file {uploaded_img.name} loaded")
     img = np.array(Image.open(uploaded_img))
-    st.image(img, caption='Input image')
+    st.sidebar.image(img, caption='Input image')
 
     prediction = classify_images(img)
     print(prediction)

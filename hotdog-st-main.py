@@ -11,4 +11,11 @@ def classify_images(img):
     pred, idx, probs = learn.predict(img)
     return dict(zip(categories, map(float, probs)))
 
-st.write("#Simple streamlit app for hotdog classification")
+st.write(""" 
+         # Simple streamlit app for hotdog classification
+
+          """)
+
+st.sidebar.header('User image upload')
+
+def user_input 

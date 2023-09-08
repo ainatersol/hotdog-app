@@ -32,25 +32,24 @@ uploaded_files = user_input()
 
 
 st.sidebar.header('Example images')
-example_images = [get_image_base64(f'JH/{c}.jpg') for c in categories]
-clicked = clickable_images(
-    [
-        f"data:image/jpeg;base64,{img_base64}"
-        for img_base64 in example_images
-    ],
-    titles=[f"Image #{c}" for c in categories],
-    div_style={"display": "flex", "justify-content": "center", "flex-wrap": "wrap"},
-    img_style={"margin": "5px", "height": "200px"},
+
+# Create a clickable list in the sidebar
+clicked_ex = st.sidebar.selectbox(
+    "Click to select an example",
+    [c for c in categories],
+
 )
 
-st.sidebar.markdown(f"Image #{clicked} clicked" if clicked > -1 else "No image clicked")
+# Display clicked example image
+if clicked_ex is not None:
+    st.sidebar.markdown(f"### Selected Example")
+    st.sidebar.image(np.array(Image.open(f'JH/{clicked_ex}.jpg')), caption=f"Image #{clicked_ex}")
 
 st.write(f'Categories: {categories}')
 
 def classify_images(img):
     pred, idx, probs = learn.predict(img)
     return dict(zip(categories, map(float, probs)))
-
 
 for uploaded_img in uploaded_files:
     bytes_data = uploaded_img.read()
